@@ -1,6 +1,6 @@
 # QuizUP 🧠
 
-A premium, feature-rich single-page quiz application built entirely with **Vanilla JavaScript**, **Web Components**, and modern **CSS**.
+A feature-rich single-page quiz application built entirely with **Vanilla JavaScript**, **Web Components**, and modern **CSS**.
 
 
 ## ✨ Features
