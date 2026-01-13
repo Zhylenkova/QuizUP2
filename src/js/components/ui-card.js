@@ -28,6 +28,14 @@ export class UiCard extends HTMLElement {
           transform: translateY(-4px);
           box-shadow: var(--shadow-md);
         }
+        ::slotted(input) {
+          'width: 100%;
+          padding: 0.75rem 1rem;
+          font-size: 1rem;
+          line-height: 1.2;
+          box-sizing: border-box;
+          text-align: center;
+        }'
       </style>
       <slot></slot>
     `;

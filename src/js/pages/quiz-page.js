@@ -11,7 +11,7 @@ export class QuizPage extends HTMLElement {
         this.score = 0;
         this.loading = true;
         this.error = null;
-        this.locked = false; // Prevent multiple clicks
+        this.locked = false; 
         this.timer = null;
     }
 
@@ -33,17 +33,18 @@ export class QuizPage extends HTMLElement {
         try {
             const settings = store.getState().settings;
             this.mode = settings.mode || 'standard';
+            this.difficulty = settings.difficulty || 'medium';
 
             this.questions = await fetchQuestions(
                 settings.amount,
-                settings.category
+                settings.category,
+                settings.difficulty
             );
             this.currentIndex = 0;
             this.score = 0;
             this.loading = false;
             this.render();
 
-            // Start Timer if Speed Mode
             this.startQuestionTimer();
 
         } catch (e) {
@@ -240,6 +241,7 @@ export class QuizPage extends HTMLElement {
 
         const questionEl = this.shadowRoot.querySelector('quiz-question');
         questionEl.data = currentQ;
+        questionEl.innerHTML = '';
 
         // Bind End Button
         this.shadowRoot.querySelector('#end-btn').addEventListener('click', () => {

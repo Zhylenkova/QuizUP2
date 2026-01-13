@@ -34,7 +34,6 @@ export class DashboardPage extends HTMLElement {
 
   render() {
     const { user, settings } = this.state;
-    // Categories simplified map (in real app, fetch from API)
     const categories = [
       { value: 'null', label: 'Any Category' },
       { value: '9', label: 'General Knowledge' },
@@ -72,13 +71,46 @@ export class DashboardPage extends HTMLElement {
             padding: 1rem;
             background: var(--bg-color);
             border: var(--surface-border);
+            box-sizing: border-box;
             color: var(--text-color);
             border-radius: 12px;
         }
+
         .logout-container {
           margin-top: 2rem;
           text-align: center;
         }
+
+        .setting-row label:has(input[value="easy"]) {
+          color: #22c55e; 
+        }
+
+        .setting-row label:has(input[value="medium"]) {
+          color: #f59e0b; 
+        }
+
+        .setting-row label:has(input[value="hard"]) {
+          color: #ef4444; 
+        }
+
+        .setting-row label:has(input[value="easy"]:checked) {
+          background: rgba(34, 197, 94, 0.15);
+          border-radius: 10px;
+          padding: 0.4rem 0.6rem;
+        }
+
+        .setting-row label:has(input[value="medium"]:checked) {
+          background: rgba(245, 158, 11, 0.15);
+          border-radius: 10px;
+          padding: 0.4rem 0.6rem;
+        }
+
+        .setting-row label:has(input[value="hard"]:checked) {
+          background: rgba(239, 68, 68, 0.15);
+          border-radius: 10px;
+          padding: 0.4rem 0.6rem;
+        }
+
       </style>
 
       <div class="welcome">
@@ -107,6 +139,25 @@ export class DashboardPage extends HTMLElement {
                 </label>
             </div>
         </div>
+
+        <div class="setting-row">
+          <label>Difficulty</label>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+              <input type="radio" name="difficulty" value="easy" ${settings.difficulty === 'easy' ? 'checked' : ''}>
+              Easy
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+              <input type="radio" name="difficulty" value="medium" ${settings.difficulty === 'medium' ? 'checked' : ''}>
+              Medium
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+              <input type="radio" name="difficulty" value="hard" ${settings.difficulty === 'hard' ? 'checked' : ''}>
+              Hard
+            </label>
+          </div>
+        </div>
+
         
         <ui-select label="Choose Category"></ui-select>
         
@@ -139,6 +190,14 @@ export class DashboardPage extends HTMLElement {
         if (e.target.checked) store.setMode(e.target.value);
       });
     });
+
+    const diffInputs = this.shadowRoot.querySelectorAll('input[name="difficulty"]');
+    diffInputs.forEach(input => {
+      input.addEventListener('change', (e) => {
+        if (e.target.checked) store.setDifficulty(e.target.value);
+      });
+    });
+
   }
 }
 

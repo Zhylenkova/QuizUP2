@@ -8,10 +8,14 @@ const BASE_URL = 'https://opentdb.com/api.php';
  * @param {number|null} category - Category ID or null for all.
  * @returns {Promise<Array>} Array of normalized question objects.
  */
-export async function fetchQuestions(amount = 50, category = null) {
+export async function fetchQuestions(amount = 50, category = null, difficulty = null) {
   let url = `${BASE_URL}?amount=${amount}`;
   if (category) {
     url += `&category=${category}`;
+  }
+
+  if (difficulty && difficulty !== 'null') {
+    url += `&difficulty=${difficulty}`; 
   }
 
   try {
@@ -34,7 +38,6 @@ function normalizeQuestion(item) {
   const correct = decodeHTML(item.correct_answer);
   const incorrect = item.incorrect_answers.map(decodeHTML);
 
-  // Combine and shuffle options
   const options = shuffleArray([correct, ...incorrect]);
 
   return {

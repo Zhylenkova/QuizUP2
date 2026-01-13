@@ -61,7 +61,6 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg-gradient);
   background-attachment: fixed;
-  /* Full height gradient */
   color: var(--text-color);
   min-height: 100vh;
   transition: color 0.3s ease;

@@ -7,19 +7,24 @@ export class ProfilePage extends HTMLElement {
   }
 
   connectedCallback() {
-    this.render();
+  this.shadowRoot.addEventListener('click', (e) => {
+    const target = e.target.closest('ui-button');
+    if (!target) return;
 
-    const backBtn = this.shadowRoot.querySelector('#back-btn');
-    if (backBtn) backBtn.addEventListener('click', () => window.location.hash = '/');
+    if (target.id === 'back-btn') {
+      window.location.hash = '/';
+    }
 
-    const resetBtn = this.shadowRoot.querySelector('#reset-btn');
-    if (resetBtn) resetBtn.addEventListener('click', () => {
+    if (target.id === 'reset-btn') {
       if (confirm('Are you sure you want to clear your history? This cannot be undone.')) {
         store.clearHistory();
-        this.render(); // Re-render to show empty state
+        this.render();
       }
-    });
-  }
+    }
+  });
+
+  this.render();
+}
 
   render() {
     const state = store.getState();
