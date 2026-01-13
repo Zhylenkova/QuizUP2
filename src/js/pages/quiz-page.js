@@ -11,7 +11,7 @@ export class QuizPage extends HTMLElement {
         this.score = 0;
         this.loading = true;
         this.error = null;
-        this.locked = false; 
+        this.locked = false;
         this.timer = null;
     }
 
@@ -222,7 +222,15 @@ export class QuizPage extends HTMLElement {
       <style>
         :host { display: block; }
         .progress-container { margin-bottom: 2rem; }
-        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; gap: 0.5rem; }
+        @media (max-width: 600px) {
+          .top-bar {
+            margin-bottom: 0.5rem;
+          }
+          .timer-display {
+            font-size: 1.25rem !important;
+          }
+        }
       </style>
 
       <div class="top-bar">

@@ -1,27 +1,27 @@
 export class QuizQuestion extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
+
+  set data(questionData) {
+    this._data = questionData;
+    this.render();
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    if (!this._data) {
+      this.shadowRoot.innerHTML = '';
+      return;
     }
 
-    set data(questionData) {
-        this._data = questionData;
-        this.render();
-    }
+    const { category, difficulty, type, question } = this._data;
 
-    connectedCallback() {
-        this.render();
-    }
-
-    render() {
-        if (!this._data) {
-            this.shadowRoot.innerHTML = '';
-            return;
-        }
-
-        const { category, difficulty, type, question } = this._data;
-
-        this.shadowRoot.innerHTML = `
+    this.shadowRoot.innerHTML = `
       <style>
         :host {
           display: block;
@@ -46,6 +46,15 @@ export class QuizQuestion extends HTMLElement {
           margin-bottom: 1.5rem;
           font-weight: 600;
         }
+        @media (max-width: 600px) {
+          h2 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+          }
+          .meta {
+            font-size: 0.75rem;
+          }
+        }
       </style>
       
       <div class="meta">
@@ -60,7 +69,7 @@ export class QuizQuestion extends HTMLElement {
         <slot></slot>
       </div>
     `;
-    }
+  }
 }
 
 customElements.define('quiz-question', QuizQuestion);

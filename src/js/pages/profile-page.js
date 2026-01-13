@@ -7,24 +7,24 @@ export class ProfilePage extends HTMLElement {
   }
 
   connectedCallback() {
-  this.shadowRoot.addEventListener('click', (e) => {
-    const target = e.target.closest('ui-button');
-    if (!target) return;
+    this.shadowRoot.addEventListener('click', (e) => {
+      const target = e.target.closest('ui-button');
+      if (!target) return;
 
-    if (target.id === 'back-btn') {
-      window.location.hash = '/';
-    }
-
-    if (target.id === 'reset-btn') {
-      if (confirm('Are you sure you want to clear your history? This cannot be undone.')) {
-        store.clearHistory();
-        this.render();
+      if (target.id === 'back-btn') {
+        window.location.hash = '/';
       }
-    }
-  });
 
-  this.render();
-}
+      if (target.id === 'reset-btn') {
+        if (confirm('Are you sure you want to clear your history? This cannot be undone.')) {
+          store.clearHistory();
+          this.render();
+        }
+      }
+    });
+
+    this.render();
+  }
 
   render() {
     const state = store.getState();
@@ -61,6 +61,17 @@ export class ProfilePage extends HTMLElement {
         }
         h2 { margin: 0; font-size: 1.8rem; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
         
+        @media (max-width: 600px) {
+          .header {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+          }
+          h2 {
+            font-size: 1.5rem;
+          }
+        }
+
         .stats-grid {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
@@ -77,6 +88,15 @@ export class ProfilePage extends HTMLElement {
         }
         .val { font-size: 2rem; font-weight: 800; color: var(--text-color); margin-bottom: 0.25rem; }
         .label { font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
+        
+        @media (max-width: 600px) {
+          .stats-grid {
+            grid-template-columns: 1fr;
+          }
+          .val {
+            font-size: 1.75rem;
+          }
+        }
         
         .history-section {
           background-color: var(--surface-color, #1e1e1e);
@@ -112,6 +132,24 @@ export class ProfilePage extends HTMLElement {
         
         .sc { display: block; font-weight: bold; font-size: 1.1rem; }
         .pct { font-size: 0.8rem; opacity: 0.8; }
+        
+        @media (max-width: 600px) {
+          .history-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+          }
+          .date {
+            width: 100%;
+          }
+          .mid-col {
+            padding: 0;
+            margin: 0.25rem 0;
+          }
+          .score-pill {
+            text-align: left;
+          }
+        }
         
         .empty-msg {
             text-align: center;

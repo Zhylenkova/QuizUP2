@@ -15,7 +15,7 @@ export async function fetchQuestions(amount = 50, category = null, difficulty = 
   }
 
   if (difficulty && difficulty !== 'null') {
-    url += `&difficulty=${difficulty}`; 
+    url += `&difficulty=${difficulty}`;
   }
 
   try {

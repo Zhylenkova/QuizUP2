@@ -66,7 +66,7 @@ export class DashboardPage extends HTMLElement {
             color: var(--text-secondary, #b3b3b3);
             font-size: 0.9rem;
         }
-        .setting-row input {
+        .setting-row input:not([type="radio"]) {
             width: 100%;
             padding: 1rem;
             background: var(--bg-color);
@@ -74,6 +74,46 @@ export class DashboardPage extends HTMLElement {
             box-sizing: border-box;
             color: var(--text-color);
             border-radius: 12px;
+        }
+
+        .mode-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .mode-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            background: var(--surface-color);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .mode-option:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .mode-option:has(input:checked) {
+            border-color: var(--primary-color);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .mode-option input {
+            display: none;
+        }
+
+        .mode-icon {
+            font-size: 1.5rem;
         }
 
         .logout-container {
@@ -110,6 +150,24 @@ export class DashboardPage extends HTMLElement {
           border-radius: 10px;
           padding: 0.4rem 0.6rem;
         }
+        
+        @media (max-width: 600px) {
+          .welcome h2 {
+            font-size: 1.5rem;
+          }
+          .welcome p {
+            font-size: 0.9rem;
+          }
+          .setting-row {
+            margin-bottom: 1rem;
+          }
+          .setting-row label {
+            font-size: 0.8rem;
+          }
+          .mode-group {
+              grid-template-columns: 1fr;
+          }
+        }
 
       </style>
 
@@ -128,14 +186,16 @@ export class DashboardPage extends HTMLElement {
 
         <div class="setting-row">
             <label>Game Mode</label>
-            <div style="display: flex; gap: 1rem;">
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+            <div class="mode-group">
+                <label class="mode-option">
                     <input type="radio" name="mode" value="standard" ${settings.mode === 'standard' ? 'checked' : ''}>
+                    <div class="mode-icon">🧠</div>
                     Standard
                 </label>
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                <label class="mode-option">
                     <input type="radio" name="mode" value="speed" ${settings.mode === 'speed' ? 'checked' : ''}>
-                    Speed Run ⚡
+                    <div class="mode-icon">⚡</div>
+                    Speed Run
                 </label>
             </div>
         </div>

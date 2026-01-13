@@ -1,41 +1,40 @@
 export class AnswerOption extends HTMLElement {
-    static get observedAttributes() {
-        return ['state']; // idle, selected, correct, wrong
+  static get observedAttributes() {
+    return ['state'];
+  }
+
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
+
+  connectedCallback() {
+    this.render();
+    this.addEventListener('click', this._handleClick.bind(this));
+  }
+
+  _handleClick(e) {
+    if (this.getAttribute('state') !== 'idle') {
+      e.preventDefault();
+      e.stopPropagation();
     }
+  }
 
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue !== newValue) {
+      this.render();
     }
+  }
 
-    connectedCallback() {
-        this.render();
-        this.addEventListener('click', this._handleClick.bind(this));
-    }
+  render() {
+    const text = this.textContent;
+    const state = this.getAttribute('state') || 'idle';
 
-    _handleClick(e) {
-        if (this.getAttribute('state') !== 'idle') {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-    }
+    let icon = '';
+    if (state === 'correct') icon = '✓';
+    if (state === 'wrong') icon = '✗';
 
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue !== newValue) {
-            this.render();
-        }
-    }
-
-    render() {
-        const text = this.textContent;
-        const state = this.getAttribute('state') || 'idle';
-
-        // Determine icon
-        let icon = '';
-        if (state === 'correct') icon = '✓';
-        if (state === 'wrong') icon = '✗';
-
-        this.shadowRoot.innerHTML = `
+    this.shadowRoot.innerHTML = `
       <style>
         :host {
           display: block;
@@ -58,15 +57,11 @@ export class AnswerOption extends HTMLElement {
           font-family: inherit;
         }
         
-        /* Hover state (only when idle) */
         button:not([disabled]):hover {
           background-color: rgba(255,255,255,0.05);
           transform: translateX(4px);
         }
 
-        /* States via attribute selector on host or class on button? 
-           Using class on button based on attribute for simplicity in style block
-        */
         
         button.selected {
           border-color: var(--primary-color, #bb86fc);
@@ -85,7 +80,7 @@ export class AnswerOption extends HTMLElement {
           color: var(--error-color, #cf6679);
         }
         
-        /* Disabled state for non-selected items when answer is revealed */
+        
         :host([disabled]) button {
              opacity: 0.5;
              cursor: default;
@@ -102,7 +97,7 @@ export class AnswerOption extends HTMLElement {
         <span class="icon">${icon}</span>
       </button>
     `;
-    }
+  }
 }
 
 customElements.define('answer-option', AnswerOption);

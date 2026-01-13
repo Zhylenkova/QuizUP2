@@ -23,6 +23,12 @@ export class UiCard extends HTMLElement {
           padding: 2rem;
           margin-bottom: 1rem;
           transition: transform 0.2s ease, box-shadow 0.2s ease;
+          box-sizing: border-box;
+        }
+        @media (max-width: 600px) {
+          :host {
+            padding: 1.25rem;
+          }
         }
         :host([hoverable]:hover) {
           transform: translateY(-4px);

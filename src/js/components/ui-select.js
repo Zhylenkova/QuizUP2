@@ -78,7 +78,6 @@ export class UiSelect extends HTMLElement {
       </select>
     `;
 
-    // Re-bind change event
     this.shadowRoot.querySelector('select').addEventListener('change', (e) => {
       this.dispatchEvent(new CustomEvent('change', { detail: e.target.value }));
     });

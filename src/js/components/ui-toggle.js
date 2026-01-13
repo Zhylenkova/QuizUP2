@@ -11,10 +11,8 @@ export class UiToggle extends HTMLElement {
     this.btn = this.shadowRoot.querySelector('button');
     this.btn.addEventListener('click', () => this.toggle());
 
-    // Sync initial state
     this.updateState(store.getState().theme);
 
-    // Listen for external changes (if any)
     store.addEventListener('state-changed', (e) => {
       this.updateState(e.detail.theme);
     });

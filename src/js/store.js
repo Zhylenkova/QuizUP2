@@ -52,14 +52,12 @@ class Store extends EventTarget {
         try {
             const key = USER_KEY_PREFIX + username;
             const stored = localStorage.getItem(key);
-            // Merge stored data with initial state to ensure defaults exist
             if (stored) {
                 const parsed = JSON.parse(stored);
-                // Ensure Arrays are initialized if data is old
                 return {
                     ...getInitialState(),
                     ...parsed,
-                    user: { name: username } 
+                    user: { name: username }
                 };
             }
         } catch (e) {
@@ -70,34 +68,30 @@ class Store extends EventTarget {
     }
 
     save() {
-        // 1. Save Active User Data
         if (this.state.user && this.state.user.name) {
             const key = USER_KEY_PREFIX + this.state.user.name;
             localStorage.setItem(key, JSON.stringify(this.state));
         }
 
-        // 2. Save Meta (Active Session)
         const meta = { lastUser: this.state.user ? this.state.user.name : null };
         localStorage.setItem(META_KEY, JSON.stringify(meta));
 
         this.dispatchEvent(new CustomEvent('state-changed', { detail: this.state }));
     }
 
-    // --- Actions ---
 
     login(name) {
-        // Save previous user if needed (handled by save actions usually, but ensure consistency)
+
         this.save();
 
-        // Switch context
         this.state = this.loadUser(name);
-        this.save(); // Persist the switch immediately
+        this.save(); 
     }
 
     logout() {
-        this.save(); // Save current before exit
+        this.save();
         this.state = getInitialState();
-        this.save(); // Clear meta
+        this.save();
     }
 
     setCategory(categoryId) {
@@ -142,7 +136,6 @@ class Store extends EventTarget {
             this.state.history.shift();
         }
 
-        // Check Achievements
         this.checkAchievements(runData);
 
         this.save();

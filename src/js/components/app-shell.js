@@ -15,7 +15,6 @@ export class AppShell extends HTMLElement {
     store.addEventListener('state-changed', (e) => {
       this.updateTheme(e.detail.theme);
     });
-    // Initial theme sync
     this.updateTheme(store.getState().theme);
   }
 
@@ -46,6 +45,11 @@ export class AppShell extends HTMLElement {
           top: 0;
           z-index: 100;
         }
+        @media (max-width: 600px) {
+          header {
+            padding: 0.75rem 1rem;
+          }
+        }
         .icon-btn {
             background: rgba(255,255,255,0.05);
             border: 1px solid var(--surface-border);
@@ -71,12 +75,23 @@ export class AppShell extends HTMLElement {
           -webkit-text-fill-color: transparent;
           font-weight: 800;
         }
+        @media (max-width: 600px) {
+          h1 {
+            font-size: 1.25rem;
+          }
+        }
         main {
           flex: 1;
           padding: 1rem;
           max-width: 800px;
           margin: 0 auto;
           width: 100%;
+          box-sizing: border-box;
+        }
+        @media (max-width: 600px) {
+          main {
+            padding: 0.5rem;
+          }
         }
         footer {
           text-align: center;
@@ -103,16 +118,12 @@ export class AppShell extends HTMLElement {
       </footer>
     `;
 
-    // Bind Profile Button
     const profBtn = this.shadowRoot.querySelector('#header-profile-btn');
     profBtn.addEventListener('click', () => {
-      // If not logged in, this might redirect to login anyway by router, but that's fine.
       window.location.hash = '/profile';
     });
 
-    // Optional: Hide if not logged in? 
-    // We already subscribe to store in connectedCallback -> subscribe -> updateTheme.
-    // Let's add updateAuth.
+
   }
 }
 

@@ -52,6 +52,20 @@ export class ResultsPage extends HTMLElement {
           align-items: center;
           margin: 2rem auto;
           position: relative;
+          box-sizing: border-box;
+        }
+        @media (max-width: 600px) {
+          .score-circle {
+            width: 140px;
+            height: 140px;
+            margin: 1rem auto;
+          }
+          .score-value {
+            font-size: 2.5rem;
+          }
+          h1 {
+            font-size: 1.5rem;
+          }
         }
         .score-circle::before {
             content: '';
@@ -83,6 +97,11 @@ export class ResultsPage extends HTMLElement {
           gap: 1rem;
           max-width: 300px;
           margin: 0 auto;
+        }
+        @media (max-width: 600px) {
+          .actions {
+            max-width: 100%;
+          }
         }
         h1 { margin-bottom: 0.5rem; }
         .sub-msg { color: var(--text-secondary); margin-bottom: 1rem; }
