@@ -1,11 +1,8 @@
-/**
- * Simple Store module with localStorage persistence.
- */
 
 const META_KEY = 'quiz_app_meta_v1';
 const USER_KEY_PREFIX = 'quiz_app_user_';
 
-// Default initial state for a fresh user
+
 const getInitialState = () => ({
     user: null,
     settings: {
@@ -25,13 +22,11 @@ class Store extends EventTarget {
         this.meta = this.loadMeta();
         this.state = this.loadUser(this.meta.lastUser);
 
-        // Ensure theme is applied on load
+
         if (this.state.theme) {
-            // We can't easily access document body here before dom ready sometimes, 
-            // but app-shell subscribes to this.
+
         }
 
-        // Define Achievements Metadata
         this.achievementMeta = [
             { id: 'first_win', name: 'First Steps', desc: 'Complete your first quiz', icon: '🐣' },
             { id: 'perfect_10', name: 'Perfect 10', desc: 'Get 10/10 in a quiz', icon: '🎯' },
@@ -63,7 +58,7 @@ class Store extends EventTarget {
                 return {
                     ...getInitialState(),
                     ...parsed,
-                    user: { name: username } // Ensure user obj is set
+                    user: { name: username } 
                 };
             }
         } catch (e) {

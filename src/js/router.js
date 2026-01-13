@@ -22,10 +22,8 @@ export class Router {
     handleRoute() {
         let hash = window.location.hash.slice(1) || '/';
 
-        // Auth Guards
         const user = store.getState().user;
 
-        // Guard: If not logged in and trying to go anywhere except login, redirect to login
         if (!user && hash !== '/login') {
             window.location.hash = '/login';
             return;
